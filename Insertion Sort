@@ -1,0 +1,77 @@
+#include <ctime>
+class Timer{
+private:
+    time_t start;
+    time_t now;
+    
+public:
+    Timer(){
+        time(&start);
+    }
+    
+    double elapsedTime(){
+        time(&now);
+        return difftime(now, start);
+    }
+};
+
+void fillArrInOrder(int arr[], int size){
+    for(int i = 0; i < size; i++){
+        arr[i] = i;
+    }
+}
+
+void fillArrReverse(int arr[], int size){
+    for(int i = size -1; i > 0; i--){
+        arr[size - i - 1] = i;
+    }
+}
+
+void fillArrRandom(int arr[], int size){
+    for(int i = 0; i < size; i++){
+        arr[i] = rand() % size;
+    }
+}
+
+void outputArr(int arr[], int size){
+    for(int i = 0; i < size; i++){
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+void insertionSort(int arr[], int n)
+{
+    int i;
+    int target;
+    int j;
+    
+    for(i = 1; i < n; i++){
+        target = arr[i];
+        j = i - 1;
+        while(j >= 0 && arr[j] > target){
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = target;
+    }
+}
+
+int main(){
+    srand(time(nullptr));
+    int size = 10;
+    int tester[size];
+    fillArrReverse(tester, size);
+    outputArr(tester, size);
+    
+    Timer* times = new Timer();
+    
+    insertionSort(tester, size);
+    
+    outputArr(tester, size);
+    
+    double seconds = times->elapsedTime();
+    cout << "Total time in seconds: " << seconds << endl;
+    
+    return 0;
+}
