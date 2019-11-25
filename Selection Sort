@@ -1,0 +1,93 @@
+using namespace std;
+#include <iostream>
+#include <vector>
+#include <stdlib.h>
+
+class Timer{
+private:
+    time_t start;
+    time_t now;
+    
+public:
+    Timer(){
+        time(&start);
+    }
+    
+    double elapsedTime(){
+        time(&now);
+        return difftime(now, start);
+    }
+};
+
+void fillVectRand(vector<int>& a, int N){
+    for(int i = 0; i < N; i++){
+        a.push_back(rand() % 100);
+    }
+}
+void fillVectSorted(vector<int>& a, int N){
+    for(int i = 0; i < N; i++){
+        a.push_back(i);
+    }
+}
+void fillVectHalfSorted(vector<int>&a, int N){
+    for(int i = 0; i < N/2; i++){
+        a.push_back(i);
+    }
+    for(int i = 0; i < N/2; i++){
+        a.push_back(rand() % 100);
+    }
+    if(N % 2 == 1){ //incase vector is odd
+        a.push_back(3);
+    }
+}
+void fillVectReverse(vector<int>& a, int N){
+    for(int i = 0; i < N; i++){
+        a.push_back(N-i);
+    }
+}
+void outputVect(vector<int> a){
+    cout << "Current vector: " << endl;
+    for(int i = 0; i < a.size(); i++){
+        cout << a[i] << " ";
+    }
+    cout << endl << endl;
+}
+
+
+//SELECTION SORT
+void selectionSort(vector<int>& arr){
+    for(int i = 0; i < arr.size(); i++){
+        int min = i;
+        for(int j = i + 1; j < arr.size(); j++){
+            if(arr[j] < arr[min]) min = j;
+        }
+        //swap i and min
+        int temp = arr[i];
+        arr[i] = arr[min];
+        arr[min] = temp;
+    }
+}
+
+int main(){
+    
+    srand(time(nullptr));
+    
+    vector<int> vect;
+    int size = 50000;
+    //fillVectHalfSorted(vect, 50000);
+    //fillVectSorted(vect, 50000);
+    //fillVectRand(vect, 50000);
+    fillVectReverse(vect, 50000);
+    //outputVect(vect);
+    
+    Timer* times = new Timer();
+    selectionSort(vect);
+    
+    cout << "Selection sorting array that is in reverse order of size: " << size << endl << endl;
+    //outputVect(vect);
+    
+    double seconds = times->elapsedTime();
+    cout << "Total time in seconds: " << seconds << endl;
+    
+    return 0;
+}
