@@ -1,0 +1,20 @@
+Given an input set S and integer x find if 2 elements in set S add up to x. To do this efficently we first sort the set S taking nlogn
+assuming best sortgin algoirhtim. Then we start comparing the first and last element and if they are greater than x we decrement j 
+otherwise we increment i. This will take n time.
+
+Total time is nlogn + n = nlogn
+
+Sort(set S)     --Takes nlogn time
+
+i <- 1  j <- n
+
+while i <= j     --Takes n time   *note we assume that i can equal j so that if a single element can be doubled and sum to x we retrun true
+  do  if S[i] + S[j] = x 
+           then
+               return TRUE
+      if S[i] + S[j] > x
+           then j <- j - 1
+      else
+            i <- i + 1
+            
+return FALSE
